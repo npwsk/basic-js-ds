@@ -96,6 +96,9 @@ class BinarySearchTree {
     }
     // Node with the data is a leaf (has no children)
     if (!node.leftChild && !node.rightChild) {
+      if (!parent) {
+        return;
+      }
       if (parent.data > node.data) {
         parent.leftChild = null;
         return;
@@ -107,23 +110,37 @@ class BinarySearchTree {
     }
     // Node with the data has only left child
     if (node.leftChild && !node.rightChild) {
+      const nextNode = node.leftChild;
+      if (!parent) {
+        this.data = nextNode.data;
+        this.leftChild = nextNode.leftChild;
+        this.rightChild = nextNode.rightChild;
+        return;
+      }
       if (parent.data > node.data) {
-        parent.leftChild = node.leftChild;
+        parent.leftChild = nextNode;
         return;
       }
       if (parent.data < node.data) {
-        parent.rightChild = node.leftChild;
+        parent.rightChild = nextNode;
         return;
       }
     }
     // Node with the data has only right child
     if (!node.leftChild && node.rightChild) {
+      const nextNode = node.rightChild;
+      if (!parent) {
+        this.data = nextNode.data;
+        this.leftChild = nextNode.leftChild;
+        this.rightChild = nextNode.rightChild;
+        return;
+      }
       if (parent.data > node.data) {
-        parent.leftChild = node.rightChild;
+        parent.leftChild = nextNode;
         return;
       }
       if (parent.data < node.data) {
-        parent.rightChild = node.rightChild;
+        parent.rightChild = nextNode;
         return;
       }
     }
